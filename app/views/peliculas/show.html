@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ pelicula.titulo }}</h1>
+<img src="{{ pelicula.imagen_url }}" alt="{{ pelicula.titulo }}">
+<p>{{ pelicula.descripcion }}</p>
+{% endblock %}

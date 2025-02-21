@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ serie.titulo }}</h1>
+<img src="{{ serie.imagen_url }}" alt="{{ serie.titulo }}">
+<p>{{ serie.descripcion }}</p>
+{% endblock %}

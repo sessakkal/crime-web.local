@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Películas de Crimen</title>
+</head>
+<body>
+    <h1>Películas de Crimen</h1>
+    <ul>
+        {% for pelicula in peliculas %}
+            <li>{{ pelicula.titulo }} ({{ pelicula.año }})</li>
+        {% else %}
+            <li>No hay películas disponibles.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

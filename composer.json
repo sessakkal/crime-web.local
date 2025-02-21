@@ -1,0 +1,12 @@
+{
+    "name": "usuario/crime-web",
+    "autoload": {
+        "psr-4": {
+            "Usuario\\CrimeWeb\\": "src/"
+        }
+    },
+    "require": {
+        "twig/twig": "^3.20",
+        "firebase/php-jwt": "^6.11"
+    }
+}
