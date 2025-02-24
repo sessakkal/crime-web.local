@@ -8,7 +8,6 @@ import time
 
 # Configuración de opciones para ejecutar Chrome sin interfaz gráfica
 chrome_options = Options()
-chrome_options.add_argument("--headless")  # Ejecutar en modo sin interfaz
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 
