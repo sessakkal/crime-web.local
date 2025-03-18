@@ -1,32 +1,30 @@
 <?php
-// public/index.php
-
-// Incluir el archivo de conexión a la base de datos
+session_start(); // Iniciar sesión
 require __DIR__ . '/../includes/db.php';
 
-// Obtener la ruta solicitada
 $request_uri = $_SERVER['REQUEST_URI'];
 
-// Conexión a la base de datos
 $conn = connect_to_database();
 
 // Manejo de rutas
 if ($request_uri === '/') {
-    require __DIR__ . '/views/home.php'; // Ruta corregida
-} elseif (strpos($request_uri, '/peliculas') === 0) {
-    require __DIR__ . '/views/peliculas.php'; // Ruta corregida
-} elseif (strpos($request_uri, '/series') === 0) {
-    require __DIR__ . '/views/series.php'; // Ruta corregida
+    require __DIR__ . '/views/home.php';
+} elseif ($request_uri === '/peliculas') {
+    require __DIR__ . '/views/peliculas.php';
+} elseif ($request_uri === '/series') {
+    require __DIR__ . '/views/series.php';
 } elseif (strpos($request_uri, '/pelicula/') === 0) {
-    require __DIR__ . '/views/detalle_pelicula.php'; // Ruta corregida
+    require __DIR__ . '/views/detalle_pelicula.php';
 } elseif (strpos($request_uri, '/serie/') === 0) {
-    require __DIR__ . '/views/detalle_serie.php'; // Ruta corregida
+    require __DIR__ . '/views/detalle_serie.php';
 } elseif ($request_uri === '/registro') {
-    require __DIR__ . '/views/registro.php'; // Nueva ruta para el registro
+    require __DIR__ . '/views/registro.php';
 } elseif ($request_uri === '/login') {
-    require __DIR__ . '/views/login.php'; // Nueva ruta para el inicio de sesión
+    require __DIR__ . '/views/login.php';
+} elseif ($request_uri === '/logout') {
+    require __DIR__ . '/views/logout.php'; // Agregamos logout
 } else {
-    require __DIR__ . '/views/404.php'; // Ruta corregida
+    require __DIR__ . '/views/404.php';
 }
 
 $conn->close();

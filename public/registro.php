@@ -1,60 +1,46 @@
 <?php
-session_start(); // Iniciar sesión
-require __DIR__ . '/includes/db.php'; // Incluir la conexión a la base de datos
+session_start();
+include('../includes/db.php');
+
+// Inicializamos la variable $errors como un array vacío
+$errors = [];
+
+// Conectar a la base de datos
 $conn = connect_to_database();
 
-$error = ""; // Inicializar la variable de error
+// Lógica de registro
+if (isset($_POST['register_button'])) {
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $password_confirm = mysqli_real_escape_string($conn, $_POST['password_confirm']);
+    
+    // Verificar que las contraseñas coinciden
+    if ($password != $password_confirm) {
+        $errors[] = "Las contraseñas no coinciden";
+    }
+    
+    // Verificar si el nombre de usuario ya existe
+    $query = "SELECT * FROM users WHERE username='$username'";
+    $results = mysqli_query($conn, $query);
+    if (mysqli_num_rows($results) > 0) {
+        $errors[] = "El nombre de usuario ya está en uso";
+    }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre_usuario = trim($_POST['nombre_usuario']); // Limpiar espacios en blanco
-    $email = trim($_POST['email']); // Limpiar espacios en blanco
-    $password = $_POST['password'];
-
-    // Validar campos vacíos
-    if (empty($nombre_usuario) || empty($email) || empty($password)) {
-        $error = "Todos los campos son obligatorios.";
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // Validar formato de email
-        $error = "El correo electrónico no es válido.";
-    } else {
-        // Verificar si el usuario ya existe
-        $stmt = $conn->prepare("SELECT id FROM usuarios WHERE nombre_usuario = ? OR email = ?");
-        if (!$stmt) {
-            die("Error en la consulta: " . $conn->error); // Depuración en caso de error
-        }
-        $stmt->bind_param("ss", $nombre_usuario, $email);
-        $stmt->execute();
-        $stmt->store_result();
-
-        if ($stmt->num_rows > 0) {
-            $error = "El nombre de usuario o correo electrónico ya está en uso.";
+    // Si no hay errores, registrar al usuario
+    if (count($errors) == 0) {
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        
+        $query = "INSERT INTO users (username, password) VALUES ('$username', '$password_hash')";
+        if (mysqli_query($conn, $query)) {
+            $_SESSION['username'] = $username;
+            header('Location: /');  // Redirigir al home (index.php)
+            exit();
         } else {
-            // Hash de la contraseña
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Insertar nuevo usuario
-            $stmt = $conn->prepare("INSERT INTO usuarios (nombre_usuario, email, password) VALUES (?, ?, ?)");
-            if (!$stmt) {
-                die("Error en la consulta: " . $conn->error); // Depuración en caso de error
-            }
-            $stmt->bind_param("sss", $nombre_usuario, $email, $hashed_password);
-
-            if ($stmt->execute()) {
-                // Obtener el ID del usuario recién registrado
-                $usuario_id = $stmt->insert_id;
-
-                // Iniciar sesión automáticamente después del registro
-                $_SESSION['usuario_id'] = $usuario_id;
-
-                // Redirigir a la página de inicio
-                header("Location: /index.php");
-                exit;
-            } else {
-                $error = "Error al registrar el usuario: " . $stmt->error; // Depuración
-            }
+            $errors[] = "Error al registrar el usuario";
         }
     }
 }
 
-// Mostrar la vista de registro si hay un error o si no es una solicitud POST
-require __DIR__ . '/views/registro.php';
+// Incluimos la vista de registro
+include('views/registro.php');
 ?>
