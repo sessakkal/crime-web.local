@@ -2,7 +2,7 @@
 // /public/admin/edit_pelicula.php
 
 session_start();
-if (!isset($_SESSION['usuario_id']) || $_SESSION['rol'] != 'admin') {
+if (!isset($_SESSION['user_id']) || $_SESSION['rol'] != 'admin') {
     header('Location: /login');  // Redirigir a login si no está autenticado o no es admin
     exit();
 }

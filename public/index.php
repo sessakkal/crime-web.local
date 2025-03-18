@@ -35,44 +35,44 @@ if ($request_uri === '/') {
         header("Location: /login"); // Redirigir al login si no es admin
         exit();
     }
-} elseif ($request_uri === '/admin/add_pelicula') {
+} elseif ($request_uri === '/views/add_pelicula') {
     if ($is_admin) {
-        require __DIR__ . '/admin/add_pelicula.php'; // Añadir película
+        require __DIR__ . '/views/add_pelicula.php'; // Añadir película
     } else {
         header("Location: /login"); // Redirigir al login si no es admin
         exit();
     }
-} elseif ($request_uri === '/admin/add_serie') {
+} elseif ($request_uri === '/views/add_serie') {
     if ($is_admin) {
-        require __DIR__ . '/admin/add_serie.php'; // Añadir serie
+        require __DIR__ . '/views/add_serie.php'; // Añadir serie
     } else {
         header("Location: /login"); // Redirigir al login si no es admin
         exit();
     }
-} elseif ($request_uri === '/admin/edit_pelicula') {
+} elseif ($request_uri === '/views/edit_pelicula') {
     if ($is_admin) {
-        require __DIR__ . '/admin/edit_pelicula.php'; // Editar película
+        require __DIR__ . '/views/edit_pelicula.php'; // Editar película
     } else {
         header("Location: /login"); // Redirigir al login si no es admin
         exit();
     }
-} elseif ($request_uri === '/admin/edit_serie') {
+} elseif ($request_uri === '/views/edit_serie') {
     if ($is_admin) {
-        require __DIR__ . '/admin/edit_serie.php'; // Editar serie
+        require __DIR__ . '/views/edit_serie.php'; // Editar serie
     } else {
         header("Location: /login"); // Redirigir al login si no es admin
         exit();
     }
-} elseif ($request_uri === '/admin/delete_pelicula') {
+} elseif ($request_uri === '/views/delete_pelicula') {
     if ($is_admin) {
-        require __DIR__ . '/admin/delete_pelicula.php'; // Eliminar película
+        require __DIR__ . '/views/delete_pelicula.php'; // Eliminar película
     } else {
         header("Location: /login"); // Redirigir al login si no es admin
         exit();
     }
-} elseif ($request_uri === '/admin/delete_serie') {
+} elseif ($request_uri === '/views/delete_serie') {
     if ($is_admin) {
-        require __DIR__ . '/admin/delete_serie.php'; // Eliminar serie
+        require __DIR__ . '/views/delete_serie.php'; // Eliminar serie
     } else {
         header("Location: /login"); // Redirigir al login si no es admin
         exit();

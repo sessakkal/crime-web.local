@@ -1,6 +1,16 @@
 <?php 
 session_start(); 
-require __DIR__ . '/header.php'; ?>
+require __DIR__ . '/header.php'; 
+// Obtener la cantidad de películas y series
+$peliculas_count = $conn->query("SELECT COUNT(*) AS count FROM Peliculas")->fetch_assoc()['count'];
+$series_count = $conn->query("SELECT COUNT(*) AS count FROM Series")->fetch_assoc()['count'];
+
+// Calcular el total y el porcentaje
+$total = $peliculas_count + $series_count;
+$peliculas_percentage = ($total > 0) ? ($peliculas_count / $total) * 100 : 0;
+$series_percentage = ($total > 0) ? ($series_count / $total) * 100 : 0;
+
+?>
 
 <main>
     <div class="container">
@@ -29,10 +39,10 @@ require __DIR__ . '/header.php'; ?>
                 ?>
                     <div class="scroll-item">
                         <div class="card">
+                            <a href="/pelicula/<?= $pelicula['id'] ?>" class="text-decoration-none">
                             <img src="<?= $pelicula['imagen_url'] ?>" class="card-img-top" alt="<?= $pelicula['titulo'] ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $pelicula['titulo'] ?></h5>
-                                <a href="/pelicula/<?= $pelicula['id'] ?>" class="btn btn-danger btn-sm">Ver más</a>
                             </div>
                         </div>
                     </div>
@@ -54,16 +64,56 @@ require __DIR__ . '/header.php'; ?>
                 ?>
                     <div class="scroll-item">
                         <div class="card">
+                            <a href="/serie/<?= $serie['id'] ?>" class="text-decoration-none">
                             <img src="<?= $serie['imagen_url'] ?>" class="card-img-top" alt="<?= $serie['titulo'] ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?= $serie['titulo'] ?></h5>
-                                <a href="/serie/<?= $serie['id'] ?>" class="btn btn-danger btn-sm">Ver más</a>
                             </div>
                         </div>
                     </div>
                 <?php endwhile; ?>
             </div>
         </div>
+
+        <!-- Gráfico de distribución de Películas y Series -->
+        <h2 class="mt-4">Distribución de Películas y Series</h2>
+        <canvas id="myPieChart" width="100" height="100"></canvas>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Obtener los datos de PHP
+            var peliculasPercentage = <?= $peliculas_percentage ?>;
+            var seriesPercentage = <?= $series_percentage ?>;
+
+            var ctx = document.getElementById('myPieChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Películas', 'Series'],
+                    datasets: [{
+                        label: 'Porcentaje',
+                        data: [peliculasPercentage, seriesPercentage],
+                        backgroundColor: ['#FF6384', '#36A2EB'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw.toFixed(2) + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
     </div>
 </main>
 

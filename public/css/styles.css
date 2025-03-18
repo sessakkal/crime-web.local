@@ -10,6 +10,11 @@ body {
     padding: 0;
 }
 
+
+
+h2{
+    color: #ffffff;
+}
 /* Contenedor principal */
 main {
     flex: 1;
@@ -171,47 +176,42 @@ button:hover {
 }
 
 
-/* Estilos para el contenedor de scroll */
 .scroll-container {
-    width: 100%;
-    overflow-x: auto; /* Habilitar scroll horizontal */
-    white-space: nowrap; /* Evitar saltos de línea */
-    padding-bottom: 10px; /* Espacio para el scroll */
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
 }
 
-/* Estilos para el wrapper de scroll */
 .scroll-wrapper {
-    display: inline-flex; /* Mostrar elementos en línea */
-    gap: 15px; /* Espacio entre elementos */
+    display: flex;
 }
 
-/* Estilos para cada elemento del scroll */
 .scroll-item {
-    display: inline-block; /* Mostrar elementos en línea */
-    width: 200px; /* Ancho fijo para cada elemento */
-    flex: 0 0 auto; /* Evitar que los elementos se estiren */
+    flex: 0 0 auto;
+    width: 200px; /* Ajusta el ancho según sea necesario */
+    margin-bottom: 20px;
+    overflow: hidden;
 }
 
-/* Estilos para las tarjetas */
 .card {
-    background-color: #000000; /* Fondo negro */
-    border: 1px solid #ff0000; /* Borde rojo */
-    transition: transform 0.3s ease;
-    max-width: 310px;
+    background-color: #000;
+    color: white;
+    border: none;
+    position: relative;
 }
 
-.card:hover {
-    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
-}
-
-.card-img-top {
-    object-fit: cover; /* Ajustar la imagen sin distorsionar */
+.card-body {
+    padding: 10px;
+    overflow: hidden; /* Evita que el texto se salga */
 }
 
 .card-title {
-    color: #ffffff; /* Texto blanco */
     font-size: 1rem;
     font-weight: bold;
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Agrega '...' al final si el texto es muy largo */
 }
 
 .btn-danger {
@@ -228,4 +228,107 @@ button:hover {
 img{
     max-width: 310px;
     max-height: 420px;
+}
+
+
+/* Estilo para el body en el panel de administración */
+.admin-panel {
+    background-color: #1a1a1a; /* Fondo oscuro */
+    color: #ffffff; /* Texto blanco */
+}
+
+/* Estilo para los enlaces del panel de administración */
+.admin-link {
+    background-color: #333333; /* Fondo oscuro */
+    color: #ffffff; /* Texto blanco */
+    border: 1px solid #ff0000; /* Borde rojo */
+    transition: background-color 0.3s ease;
+}
+
+.admin-link:hover {
+    background-color: #ff0000; /* Fondo rojo al pasar el mouse */
+    color: #ffffff;
+}
+
+/* Botón para cerrar sesión */
+.admin-btn {
+    background-color: #ff0000; /* Fondo rojo */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.admin-btn:hover {
+    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
+}
+/* Estilo para la tarjeta de serie */
+.serie-card {
+    background-color: #000000; /* Fondo negro */
+    border: 1px solid #ff0000; /* Borde rojo */
+    transition: transform 0.3s ease;
+    max-width: 100%; /* Ancho máximo adaptable */
+    margin: 20px auto; /* Márgenes automáticos para centrar */
+    padding: 20px;
+}
+
+/* Estilos adicionales para la imagen */
+.serie-card img {/* Asegurarse de que la imagen no se desborde */
+    border-bottom: 1px solid #ff0000; /* Borde rojo en la parte inferior de la imagen */
+}
+
+/* Estilos para el texto dentro de la tarjeta */
+.serie-card .card-body {
+    color: #ffffff; /* Texto blanco */
+}
+
+.serie-card .card-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.serie-card .card-text {
+    font-size: 1.2rem;
+    color: #cccccc;
+}
+
+/* Ajustes de tamaño y estilos para el botón */
+.serie-card .btn {
+    margin-top: 20px;
+}
+.pelicula-card {
+    background-color: #000000; /* Fondo negro */
+    border: 1px solid #ff0000; /* Borde rojo */
+    transition: transform 0.3s ease;
+    max-width: 100%; /* Ancho máximo adaptable */
+    margin: 20px auto; /* Márgenes automáticos para centrar */
+    padding: 20px;
+}
+
+/* Estilos adicionales para la imagen */
+.pelicula-card img {/* Asegurarse de que la imagen no se desborde */
+    border-bottom: 1px solid #ff0000; /* Borde rojo en la parte inferior de la imagen */
+}
+
+/* Estilos para el texto dentro de la tarjeta */
+.pelicula-card .card-body {
+    color: #ffffff; /* Texto blanco */
+}
+
+.pelicula-card .card-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.pelicula-card .card-text {
+    font-size: 1.2rem;
+    color: #cccccc;
+}
+
+/* Ajustes de tamaño y estilos para el botón */
+.pelicula-card .btn {
+    margin-top: 20px;
+}
+
+canvas{
+    max-width: 400px;
+    max-height: 400px;
 }
