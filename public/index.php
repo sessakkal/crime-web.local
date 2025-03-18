@@ -6,6 +6,9 @@ $request_uri = $_SERVER['REQUEST_URI'];
 
 $conn = connect_to_database();
 
+// Comprobar si el usuario está autenticado y es admin
+$is_admin = isset($_SESSION['rol']) && $_SESSION['rol'] === 'admin';
+
 // Manejo de rutas
 if ($request_uri === '/') {
     require __DIR__ . '/views/home.php';
@@ -22,10 +25,62 @@ if ($request_uri === '/') {
 } elseif ($request_uri === '/login') {
     require __DIR__ . '/views/login.php';
 } elseif ($request_uri === '/logout') {
-    require __DIR__ . '/views/logout.php'; // Agregamos logout
+    require __DIR__ . '/logout.php'; // Agregamos logout
+
+// Rutas del Panel de Administración (solo si es admin)
+} elseif ($request_uri === '/admin') {
+    if ($is_admin) {
+        require __DIR__ . '/admin/panel_admin.php'; // Página principal del panel admin
+    } else {
+        header("Location: /login"); // Redirigir al login si no es admin
+        exit();
+    }
+} elseif ($request_uri === '/admin/add_pelicula') {
+    if ($is_admin) {
+        require __DIR__ . '/admin/add_pelicula.php'; // Añadir película
+    } else {
+        header("Location: /login"); // Redirigir al login si no es admin
+        exit();
+    }
+} elseif ($request_uri === '/admin/add_serie') {
+    if ($is_admin) {
+        require __DIR__ . '/admin/add_serie.php'; // Añadir serie
+    } else {
+        header("Location: /login"); // Redirigir al login si no es admin
+        exit();
+    }
+} elseif ($request_uri === '/admin/edit_pelicula') {
+    if ($is_admin) {
+        require __DIR__ . '/admin/edit_pelicula.php'; // Editar película
+    } else {
+        header("Location: /login"); // Redirigir al login si no es admin
+        exit();
+    }
+} elseif ($request_uri === '/admin/edit_serie') {
+    if ($is_admin) {
+        require __DIR__ . '/admin/edit_serie.php'; // Editar serie
+    } else {
+        header("Location: /login"); // Redirigir al login si no es admin
+        exit();
+    }
+} elseif ($request_uri === '/admin/delete_pelicula') {
+    if ($is_admin) {
+        require __DIR__ . '/admin/delete_pelicula.php'; // Eliminar película
+    } else {
+        header("Location: /login"); // Redirigir al login si no es admin
+        exit();
+    }
+} elseif ($request_uri === '/admin/delete_serie') {
+    if ($is_admin) {
+        require __DIR__ . '/admin/delete_serie.php'; // Eliminar serie
+    } else {
+        header("Location: /login"); // Redirigir al login si no es admin
+        exit();
+    }
 } else {
-    require __DIR__ . '/views/404.php';
+    require __DIR__ . '/views/404.php'; // Página 404 para rutas no definidas
 }
 
 $conn->close();
+
 ?>

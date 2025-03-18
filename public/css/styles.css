@@ -197,6 +197,7 @@ button:hover {
     background-color: #000000; /* Fondo negro */
     border: 1px solid #ff0000; /* Borde rojo */
     transition: transform 0.3s ease;
+    max-width: 310px;
 }
 
 .card:hover {

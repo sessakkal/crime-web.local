@@ -1,11 +1,13 @@
-<?php require __DIR__ . '/header.php'; ?>
+<?php 
+session_start(); 
+require __DIR__ . '/header.php'; ?>
 
 <main>
     <div class="container">
         <h1>Bienvenido a Zona Crimen</h1>
 
-        <?php if (isset($_SESSION['usuario_id'])): ?>
-            <p>¡Hola! Has iniciado sesión correctamente.</p>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <p>¡Hola, <?= $_SESSION['username']; ?>! Has iniciado sesión correctamente.</p>
             <a href="/logout" class="btn btn-danger">Cerrar sesión</a>
         <?php else: ?>
             <p>Explora nuestras películas y series de crimen.</p>

@@ -15,6 +15,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/series">Series</a>
                 </li>
+                <?php if (isset($_SESSION['user_id']) && $_SESSION['rol'] == 'admin'): ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/panel_admin.php">Panel de Administración</a>
+                </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
