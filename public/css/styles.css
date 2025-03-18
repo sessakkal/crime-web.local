@@ -1,0 +1,230 @@
+/* Estilos generales */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #1a1a1a; /* Fondo oscuro */
+    color: #ffffff; /* Texto blanco */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor principal */
+main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Barra de navegación */
+.navbar {
+    background-color: #000000 !important; /* Fondo negro */
+    border-bottom: 2px solid #ff0000; /* Borde rojo */
+}
+
+.navbar-brand, .nav-link {
+    color: #ffffff !important; /* Texto blanco */
+}
+
+.nav-link:hover {
+    color: #ff0000 !important; /* Texto rojo al pasar el mouse */
+}
+
+/* Tarjetas */
+.card {
+    background-color: #000000; /* Fondo negro */
+    border: 1px solid #ff0000; /* Borde rojo */
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+}
+
+.card-img-top {
+    border-bottom: 1px solid #ff0000; /* Borde rojo en la parte inferior de la imagen */
+}
+
+.card-title {
+    color: #ffffff; /* Texto blanco */
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.card-text {
+    color: #cccccc; /* Texto gris claro */
+}
+
+/* Botones */
+.btn-danger {
+    background-color: #ff0000; /* Fondo rojo */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
+}
+
+/* Paginación */
+.pagination .page-item .page-link {
+    background-color: #000000; /* Fondo negro */
+    border: 1px solid #ff0000; /* Borde rojo */
+    color: #ffffff; /* Texto blanco */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ff0000; /* Fondo rojo */
+    border-color: #ff0000; /* Borde rojo */
+    color: #ffffff; /* Texto blanco */
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
+    border-color: #cc0000; /* Borde rojo oscuro */
+}
+
+/* Pie de página */
+footer {
+    background-color: #000000; /* Fondo negro */
+    border-top: 2px solid #ff0000; /* Borde rojo */
+    padding: 20px 0;
+    margin-top: auto; /* Pegar el footer al fondo */
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    color: #ffffff; /* Texto blanco */
+}
+
+/* Página de detalles */
+.detalle-card {
+    background-color: #000000; /* Fondo negro */
+    border: 1px solid #ff0000; /* Borde rojo */
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.detalle-card h1 {
+    color: #ffffff; /* Texto blanco */
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.detalle-card p {
+    color: #cccccc; /* Texto gris claro */
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Página de error 404 */
+.error-404 {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.error-404 h1 {
+    color: #ff0000; /* Texto rojo */
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.error-404 p {
+    color: #ffffff; /* Texto blanco */
+    font-size: 1.2rem;
+}
+
+/* Estilos para los formularios */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ff0000; /* Borde rojo */
+    border-radius: 5px;
+    background-color: #000000; /* Fondo negro */
+    color: #ffffff; /* Texto blanco */
+    font-size: 16px;
+}
+
+input::placeholder {
+    color: #cccccc; /* Texto gris claro para los placeholders */
+}
+
+button {
+    padding: 10px;
+    background-color: #ff0000; /* Fondo rojo */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
+}
+
+
+/* Estilos para el contenedor de scroll */
+.scroll-container {
+    width: 100%;
+    overflow-x: auto; /* Habilitar scroll horizontal */
+    white-space: nowrap; /* Evitar saltos de línea */
+    padding-bottom: 10px; /* Espacio para el scroll */
+}
+
+/* Estilos para el wrapper de scroll */
+.scroll-wrapper {
+    display: inline-flex; /* Mostrar elementos en línea */
+    gap: 15px; /* Espacio entre elementos */
+}
+
+/* Estilos para cada elemento del scroll */
+.scroll-item {
+    display: inline-block; /* Mostrar elementos en línea */
+    width: 200px; /* Ancho fijo para cada elemento */
+    flex: 0 0 auto; /* Evitar que los elementos se estiren */
+}
+
+/* Estilos para las tarjetas */
+.card {
+    background-color: #000000; /* Fondo negro */
+    border: 1px solid #ff0000; /* Borde rojo */
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
+}
+
+.card-img-top {
+    object-fit: cover; /* Ajustar la imagen sin distorsionar */
+}
+
+.card-title {
+    color: #ffffff; /* Texto blanco */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.btn-danger {
+    background-color: #ff0000; /* Fondo rojo */
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #cc0000; /* Fondo rojo oscuro al pasar el mouse */
+}
+
+
+img{
+    max-width: 310px;
+    max-height: 420px;
+}

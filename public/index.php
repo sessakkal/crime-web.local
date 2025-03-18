@@ -1,43 +1,33 @@
 <?php
-// Incluye el autoload de Composer
-require_once __DIR__ . '/../vendor/autoload.php';
+// public/index.php
 
-// Configuración básica
-require_once __DIR__ . '/../config/db.php';  // Configuración de la base de datos
-require_once __DIR__ . '/../config/routes.php';  // Definición de rutas (opcional, si decides usar un sistema de routing propio)
+// Incluir el archivo de conexión a la base de datos
+require __DIR__ . '/../includes/db.php';
 
-// Inicializa el sistema de plantillas TWIG
-$loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
-$twig = new \Twig\Environment($loader, [
-    'cache' => __DIR__ . '/../var/cache/twig',
-    'debug' => true,
-]);
+// Obtener la ruta solicitada
+$request_uri = $_SERVER['REQUEST_URI'];
 
-// Obtén la URL solicitada
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+// Conexión a la base de datos
+$conn = connect_to_database();
 
-// Sistema de enrutamiento (puedes usar un enrutador personalizado o un framework)
-switch ($uri) {
-    case '/':
-        // Controlador para la página principal
-        include __DIR__ . '/../controllers/HomeController.php';
-        break;
-    
-    case '/admin':
-        // Controlador para la administración (requiere autenticación)
-        include __DIR__ . '/../controllers/AdminController.php';
-        break;
-
-    case '/login':
-        // Controlador para la página de login
-        include __DIR__ . '/../controllers/AuthController.php';
-        break;
-    
-    default:
-        // Si la ruta no existe, mostrar página 404
-        http_response_code(404);
-        echo $twig->render('404.twig');  // Crear una plantilla 404.twig
-        break;
+// Manejo de rutas
+if ($request_uri === '/') {
+    require __DIR__ . '/views/home.php'; // Ruta corregida
+} elseif (strpos($request_uri, '/peliculas') === 0) {
+    require __DIR__ . '/views/peliculas.php'; // Ruta corregida
+} elseif (strpos($request_uri, '/series') === 0) {
+    require __DIR__ . '/views/series.php'; // Ruta corregida
+} elseif (strpos($request_uri, '/pelicula/') === 0) {
+    require __DIR__ . '/views/detalle_pelicula.php'; // Ruta corregida
+} elseif (strpos($request_uri, '/serie/') === 0) {
+    require __DIR__ . '/views/detalle_serie.php'; // Ruta corregida
+} elseif ($request_uri === '/registro') {
+    require __DIR__ . '/views/registro.php'; // Nueva ruta para el registro
+} elseif ($request_uri === '/login') {
+    require __DIR__ . '/views/login.php'; // Nueva ruta para el inicio de sesión
+} else {
+    require __DIR__ . '/views/404.php'; // Ruta corregida
 }
 
-// Aquí puedes agregar más lógica para manejar los JWT, verificar sesión, etc.
+$conn->close();
+?>

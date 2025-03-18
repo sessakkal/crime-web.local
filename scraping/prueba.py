@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import csv
+import mysql.connector
 import time
 
 # Configuración de opciones para ejecutar Chrome sin interfaz gráfica
@@ -14,6 +14,21 @@ chrome_options.add_argument("--disable-dev-shm-usage")
 
 # Crear instancia del navegador
 driver = webdriver.Chrome(options=chrome_options)
+
+# Conexión a la base de datos MySQL
+def connect_to_database():
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="usuario",
+            password="usuario",
+            database="zona_crimen"
+        )
+        print("Conexión a la base de datos exitosa.")
+        return connection
+    except mysql.connector.Error as e:
+        print(f"Error al conectar a la base de datos: {e}")
+        return None
 
 # Función para esperar a que los elementos estén presentes
 def wait_for_elements(by, value, timeout=10):
@@ -35,7 +50,7 @@ def extract_data(item_url, is_movie=True):
         if is_movie:
             title = driver.find_element(By.CLASS_NAME, "titlebar-title.titlebar-title-xl").text.strip()
         else:
-            title = driver.find_element(By.CLASS_NAME, "titlebar-title.titlebar-title-lg").text.strip()
+            title = driver.find_element(By.CLASS_NAME, "titlebar-title.titlebar-title-xl").text.strip()
     except:
         title = "No disponible"
 
@@ -58,9 +73,26 @@ def extract_data(item_url, is_movie=True):
 
     return title, img_url, description
 
+# Función para insertar datos en la base de datos
+def insert_data(connection, title, img_url, description, is_movie=True):
+    try:
+        cursor = connection.cursor()
+        if is_movie:
+            query = "INSERT INTO Peliculas (titulo, imagen_url, descripcion) VALUES (%s, %s, %s)"
+        else:
+            query = "INSERT INTO Series (titulo, imagen_url, descripcion) VALUES (%s, %s, %s)"
+        cursor.execute(query, (title, img_url, description))
+        connection.commit()
+        print(f"Datos insertados: {title}")
+    except mysql.connector.Error as e:
+        print(f"Error al insertar datos: {e}")
+
 # Función principal para extraer datos de las páginas
 def extract_data_from_pages(base_url, max_pages, is_movie=True):
-    data = []
+    connection = connect_to_database()
+    if not connection:
+        return
+
     for page in range(1, max_pages + 1):
         page_url = f"{base_url}?page={page}"
         print(f"Accediendo a: {page_url}")
@@ -79,32 +111,17 @@ def extract_data_from_pages(base_url, max_pages, is_movie=True):
         for link in item_links:
             print(f"Procesando: {link}")
             title, img_url, description = extract_data(link, is_movie)
-            data.append([title, img_url, description])
+            insert_data(connection, title, img_url, description, is_movie)
 
-    return data
+    connection.close()
 
 # URLs base de las listas de películas y series
 movies_base_url = "https://www.sensacine.com/peliculas/todas-peliculas/genero-13018/"
 series_base_url = "https://www.sensacine.com/series-tv/genero-13018/"
 
 # Extraer datos de las 5 primeras páginas de películas y series
-movies_data = extract_data_from_pages(movies_base_url, 5, is_movie=True)
-series_data = extract_data_from_pages(series_base_url, 5, is_movie=False)
-
-# Combinar los datos de películas y series
-all_data = movies_data + series_data
-
-# Guardar los datos en un archivo CSV
-try:
-    with open('scraped_data.csv', mode='w', newline='', encoding='utf-8') as file:
-        writer = csv.writer(file)
-        writer.writerow(['Title', 'Image URL', 'Description'])
-        writer.writerows(all_data)
-
-    print(f"Total de items extraídos: {len(all_data)}")
-    print("Datos guardados en scraped_data.csv")
-except Exception as e:
-    print(f"Error al guardar los datos: {e}")
+extract_data_from_pages(movies_base_url, 15, is_movie=True)
+extract_data_from_pages(series_base_url, 15, is_movie=False)
 
 # Cerrar el navegador
 driver.quit()
